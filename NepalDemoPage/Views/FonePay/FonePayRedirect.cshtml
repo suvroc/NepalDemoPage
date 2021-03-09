@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>FonePay Redirect</h1>
+
+<h2>Validation Result</h2>
+@if(ViewBag.ValidationResult)
+{
+    <p>Validation correct</p>
+} else
+{
+    <p style="color: orangered">Validation incorrect</p>
+}
+
+@foreach (var param in ViewBag.QueryParams)
+{
+    <div>@param.ToString()</div>
+}
+
+<h2>Status Check Response</h2>
+<p>@ViewBag.StatusResponse</p>

@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">eSewa Webhook</h1>
+
+        @foreach (var param in ViewBag.QueryParams)
+        {
+            <div>@param.ToString()</div>
+        }
+
+
+        <h2>This should happen on backend before success</h2>
+        <body>
+            <form action="https://uat.esewa.com.np/epay/transrec" method="GET">
+                <label for="amt">Amount</label>
+                <input value="@ViewBag.QueryParams["amt"]" name="amt" type="number">
+                <br />
+                <label for="scd">Merchant Code</label>
+                <input value="EPAYTEST" name="scd" type="text">
+                <br />
+                <label for="pid">Product Id</label>
+                <input value="@ViewBag.QueryParams["oid"]" name="pid" type="text">
+                <br />
+                <label for="rid">Request Id</label>
+                <input value="@ViewBag.QueryParams["refId"]" name="rid" type="text">
+                <input value="Submit" type="submit">
+            </form>
+        </body>
+    </div>

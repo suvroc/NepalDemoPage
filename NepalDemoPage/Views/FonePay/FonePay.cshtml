@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>FonePay</h1>
+
+<form method="GET" id="payment-form" action="@(ViewBag.ClientUrl + "/api/merchantRequest")">
+    <label for="PID">Merchant Code</label>
+    <input type="text" name="PID" value="NBQM">
+    <br />
+
+    <label for="MD">MD</label>
+    <input type="text" name="MD" value="P">
+    <br />
+
+    <label for="AMT">Payable Amount</label>
+    <input type="number" name="AMT" value="30">
+    <br />
+
+    <label for="CRN">CRN</label>
+    <input type="text" name="CRN" value="NPR">
+    <br />
+
+    <label for="DT">Date</label>
+    <input type="text" name="DT" value="@DateTime.Now.ToString("MM'/'dd'/'yyyy")">
+    <br />
+
+    <label for="R1">Payment Details</label>
+    <input type="text" name="R1" value="Hello">
+    <br />
+
+    <label for="R2">Additional Info</label>
+    <input type="text" name="R2" value="test remarks">
+    <br />
+
+    <label for="RU">Return URL</label>
+    <input type="text" name="RU" value="@(ViewBag.BaseUrl + "/FonePay/FonePayRedirect")">
+    <br />
+
+    <label for="PRN">Product Reference Number</label>
+    <input type="text" name="PRN" value="@Guid.NewGuid()">
+    <br />
+
+    <label for="DV">Data Validation</label>
+    <input type="text" name="DV" value="---">
+    <button onclick="generate(); return false;">Generate</button>
+
+    <br />
+    <input type="submit" value="Click to Pay">
+</form>
+
+<script>
+    function generate() {
+        $.get("GenerateHMAC", {
+            Pid: document.getElementsByName('PID')[0].value,
+            Md: document.getElementsByName('MD')[0].value,
+            Prn: document.getElementsByName('PRN')[0].value,
+            Amt: document.getElementsByName('AMT')[0].value,
+            Crn: document.getElementsByName('CRN')[0].value,
+            Dt: document.getElementsByName('DT')[0].value,
+            R1: document.getElementsByName('R1')[0].value,
+            R2: document.getElementsByName('R2')[0].value,
+            RU: document.getElementsByName('RU')[0].value
+        }, function (data) {
+          document.getElementsByName('DV')[0].value = data;
+        });
+
+
+        document.getElementsByName('DV')[0].value = 'aaa';
+         return false;
+    }
+</script>
